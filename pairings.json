@@ -1,0 +1,20 @@
+{
+    "ssn": [{
+        "year": "2022",
+        "host": "bryan",
+        "price_limit": "20",
+        "pairings": {
+            "josh": "victoria",
+            "iris": "ana",
+            "victoria": "iris",
+            "vincent": "eric",
+            "eric": "melissa",
+            "ana": "vincent",
+            "brian": "ryan",
+            "shawn": "josh",
+            "melissa": "bryan",
+            "ryan": "shawn",
+            "bryan": "brian"
+        }
+    }]
+}
