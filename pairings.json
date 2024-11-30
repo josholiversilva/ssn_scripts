@@ -16,5 +16,25 @@
             "ryan": "shawn",
             "bryan": "brian"
         }
-    }]
+    },
+    {
+        "year": "2023",
+        "host": "vince",
+        "price_limit": "50",
+        "pairings": {
+            "brian": "vincent",
+            "eric": "brian",
+            "vincent": "shawn",
+            "ana": "bryan",
+            "jen": "victoria",
+            "iris": "melissa",
+            "victoria": "eric",
+            "bryan": "ryan",
+            "josh": "iris",
+            "shawn": "ana",
+            "ryan": "josh",
+            "melissa": "jen"
+        }
+    }
+    ]
 }

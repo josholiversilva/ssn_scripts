@@ -1,5 +1,6 @@
 import random
 import smtplib
+import json
 from email.message import EmailMessage
 
 PAIRINGS_LIST = "pairings_list.txt"
@@ -35,12 +36,19 @@ def choose_pairing(ssn_name_and_email, receiver_names_and_emails, previous_secre
     receiver_name_and_email = random.choice(receiver_names_and_emails)
     receiver_name, receiver_email = receiver_name_and_email.split(",")
 
-    while ssn_name == receiver_name or receiver_name in receivers or previous_secret_santas.get(ssn_name, "") == receiver_name:
+    while ssn_name == receiver_name or receiver_name in receivers or received_previously(ssn_name, receiver_name, previous_secret_santas):
         receiver_name_and_email = random.choice(receiver_names_and_emails)
         receiver_name, receiver_email = receiver_name_and_email.split(",")
 
     receivers.add(receiver_name)
     return receiver_name_and_email
+
+def received_previously(ssn_name, receiver_name, previous_secret_santas):
+    for pairings in previous_secret_santas:
+        if pairings.get(ssn_name) == receiver_name:
+            return True
+
+    return False
 
 def send_email(pairings):
     s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -61,23 +69,16 @@ def send_email(pairings):
     s.quit()
 
 def get_previous_secret_santas():
-    # change this to read from pairings.json as years go by
-    return {
-            "josh": "victoria",
-            "iris": "ana",
-            "victoria": "iris",
-            "vincent": "eric",
-            "eric": "melissa",
-            "ana": "vincent",
-            "brian": "ryan",
-            "bryan": "brian",
-            "shawn": "josh",
-            "melissa": "bryan",
-            "ryan": "shawn"
-        }
+    with open('pairings.json', 'r') as file:
+        data = json.load(file)["ssn"]
+    
+    pairings = [item["pairings"] for item in data]
+
+    return pairings
 
 if __name__ == '__main__':
     names_and_emails = get_names_and_emails()
     pairings = create_pairings(names_and_emails)
-    send_email(pairings)
+    print(pairings)
+    # send_email(pairings)
 
