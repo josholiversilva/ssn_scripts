@@ -1,10 +1,13 @@
 import random
 import smtplib
 import json
+import time
 from email.message import EmailMessage
+from users import Users
 
 PAIRINGS_LIST = "pairings_list.txt"
 FROM_EMAIL = "secretsantaneyigas@gmail.com"
+MAX_PAIR_LIMIT = 100
 
 def get_names_and_emails():
     pairings_list = open(PAIRINGS_LIST, "r")
@@ -36,9 +39,19 @@ def choose_pairing(ssn_name_and_email, receiver_names_and_emails, previous_secre
     receiver_name_and_email = random.choice(receiver_names_and_emails)
     receiver_name, receiver_email = receiver_name_and_email.split(",")
 
+    iteration = 0
     while ssn_name == receiver_name or receiver_name in receivers or received_previously(ssn_name, receiver_name, previous_secret_santas):
         receiver_name_and_email = random.choice(receiver_names_and_emails)
         receiver_name, receiver_email = receiver_name_and_email.split(",")
+        
+        while girl_no_match_girl(ssn_name, receiver_name):
+            receiver_name_and_email = random.choice(receiver_names_and_emails)
+            receiver_name, receiver_email = receiver_name_and_email.split(",")
+
+        iteration += 1
+
+        if iteration == MAX_PAIR_LIMIT:
+            raise Exception("This pairing is impossible")
 
     receivers.add(receiver_name)
     return receiver_name_and_email
@@ -68,6 +81,17 @@ def send_email(pairings):
 
     s.quit()
 
+def girl_no_match_girl(ssn_name, receiver):
+    if ssn_name not in Users.get_girls_to_rig():
+        return False
+
+    # skip if girl should be rigged
+    if ssn_name in Users.get_girls():
+        if receiver in Users.get_girls():
+            return False
+
+    return True
+
 def get_previous_secret_santas():
     with open('pairings.json', 'r') as file:
         data = json.load(file)["ssn"]
@@ -79,6 +103,4 @@ def get_previous_secret_santas():
 if __name__ == '__main__':
     names_and_emails = get_names_and_emails()
     pairings = create_pairings(names_and_emails)
-    print(pairings)
-    # send_email(pairings)
-
+    send_email(pairings)
