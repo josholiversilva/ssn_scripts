@@ -15,6 +15,9 @@ class Users(str, Enum):
     SHAWN = "shawn"
     VIC = "victoria"
 
+    def get_all():
+        return [u.value for u in Users]
+
     def get_girls():
         return [Users.VIC.value, Users.IRIS.value, Users.SUSAN.value, Users.EUNBI.value, Users.JEN.value, Users.ANA.value]
 

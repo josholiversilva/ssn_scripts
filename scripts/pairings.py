@@ -7,7 +7,6 @@ from users import Users
 
 PAIRINGS_LIST = "pairings_list.txt"
 FROM_EMAIL = "secretsantaneyigas@gmail.com"
-MAX_PAIR_LIMIT = 100
 
 def get_names_and_emails():
     pairings_list = open(PAIRINGS_LIST, "r")
@@ -39,20 +38,14 @@ def choose_pairing(ssn_name_and_email, receiver_names_and_emails, previous_secre
     receiver_name_and_email = random.choice(receiver_names_and_emails)
     receiver_name, receiver_email = receiver_name_and_email.split(",")
 
-    iteration = 0
     while ssn_name == receiver_name or receiver_name in receivers or received_previously(ssn_name, receiver_name, previous_secret_santas):
         receiver_name_and_email = random.choice(receiver_names_and_emails)
         receiver_name, receiver_email = receiver_name_and_email.split(",")
+
+        if sorted(ssn_name+receiver_name) in [sorted("irissusan"), sorted("vincentiris"), sorted("irisbryan")]:
+            continue
+
         
-        while girl_no_match_girl(ssn_name, receiver_name):
-            receiver_name_and_email = random.choice(receiver_names_and_emails)
-            receiver_name, receiver_email = receiver_name_and_email.split(",")
-
-        iteration += 1
-
-        if iteration == MAX_PAIR_LIMIT:
-            raise Exception("This pairing is impossible")
-
     receivers.add(receiver_name)
     return receiver_name_and_email
 
@@ -63,7 +56,7 @@ def received_previously(ssn_name, receiver_name, previous_secret_santas):
 
     return False
 
-def send_email(pairings):
+def send_emails(pairings):
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
     s.login(FROM_EMAIL, "udsn orou ryhf zcmk")
@@ -103,4 +96,5 @@ def get_previous_secret_santas():
 if __name__ == '__main__':
     names_and_emails = get_names_and_emails()
     pairings = create_pairings(names_and_emails)
-    send_email(pairings)
+    print(pairings)
+    # send_emails(pairings)

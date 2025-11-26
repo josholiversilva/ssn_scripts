@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Profile - SSN{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Your Profile</h2>
+      <p>Logged in as <strong>{{ user }}</strong></p>
+
+      <div class="card mb-3 box-festive">
+        <div class="card-body">
+          <h5>Who you're buying for</h5>
+          {% if recipient %}
+            <p><strong>{{ recipient }}</strong></p>
+            <h6>Recipient's wishlist</h6>
+            <ul>
+              {% for it in wishlist %}
+                <li>{{ it.item }}</li>
+              {% else %}
+                <li class="text-muted">No wishlist items yet.</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No recipient assigned.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card box-festive">
+        <div class="card-body">
+          <h5>Random Fact</h5>
+          <p class="small text-muted">{{ fact }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

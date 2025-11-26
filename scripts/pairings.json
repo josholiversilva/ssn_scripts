@@ -35,6 +35,27 @@
             "ryan": "josh",
             "melissa": "jen"
         }
+    },
+    {
+        "year": "2024",
+        "host": "vince",
+        "price_limit": "50",
+        "pairings": {
+            "brian": "melissa",
+            "eric": "ana",
+            "vincent": "iris",
+            "ana": "josh",
+            "jen": "brian",
+            "iris": "eric",
+            "victoria": "shawn",
+            "bryan": "vince",
+            "josh": "bryan",
+            "shawn": "jen",
+            "ryan": "eunbi",
+            "melissa": "ryan",
+            "susan":"victoria",
+            "eunbi":"iris"
+        }
     }
     ]
 }
