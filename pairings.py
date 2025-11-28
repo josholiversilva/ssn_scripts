@@ -42,10 +42,12 @@ def choose_pairing(ssn_name_and_email, receiver_names_and_emails, previous_secre
         receiver_name_and_email = random.choice(receiver_names_and_emails)
         receiver_name, receiver_email = receiver_name_and_email.split(",")
 
-        if sorted(ssn_name+receiver_name) in [sorted("irissusan"), sorted("vincentiris"), sorted("irisbryan")]:
-            continue
+        while ssn_name == "iris" and sorted(ssn_name+receiver_name) in [sorted("vincentiris"), sorted("irisbryan")]:
+            receiver_name_and_email = random.choice(receiver_names_and_emails)
+            receiver_name, receiver_email = receiver_name_and_email.split(",")
 
-        
+    if ssn_name == "iris":
+        print("iris's receiver = " + receiver_name)
     receivers.add(receiver_name)
     return receiver_name_and_email
 
